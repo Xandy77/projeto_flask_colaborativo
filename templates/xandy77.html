@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Formulário de Dados</title>
+    <link rel="stylesheet" href="/static/css/xandy77.css">
+</head>
+<body>
+    <h1>Insira seus dados</h1>
+    <form action="xandy77/bmi_svm" method="post">
+        <label for="age">Idade:</label><br>
+        <input type="number" id="age" name="age" required><br><br>
+
+        <label for="gender">Gênero:</label><br>
+        <select id="gender" name="gender" required>
+            <option value="Female">Feminino</option>
+            <option value="Male">Masculino</option>
+            <option value="Other">Outro</option>
+        </select><br><br>
+
+        <label for="bmi">BMI:</label><br>
+        <input type="number" step="0.1" id="bmi" name="bmi" required><br><br>
+
+        <!-- Adicione mais campos conforme necessário -->
+
+        <input type="submit" value="Enviar">
+    </form>
+</body>
+</html>
