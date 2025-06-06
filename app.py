@@ -74,6 +74,51 @@ def pred_diabetCa():
     # Passamos a mensagem e o status para o template HTML
     return render_template('resul_pred_calebe.html', message=message, diabetes_status=diabetes_status)
 
+@app.route('/xandy77/bmi_svm', methods=['POST'])
+def predict():
+    # Pega dados do formulário
+    age_str = request.form.get('age')
+    gender = request.form.get('gender')
+    bmi_str = request.form.get('bmi')
+
+    # Verifica se todos os dados foram fornecidos
+    if not all([age_str, gender, bmi_str]):
+        return render_template_string("Erro: Todos os campos (idade, gênero, BMI) são obrigatórios.")
+
+    # Conversão de dados
+    try:
+        age = int(age_str)
+        bmi = float(bmi_str)
+    except (ValueError, TypeError):
+        return render_template_string("Erro: Idade ou BMI inválidos. Por favor, insira valores numéricos.")
+
+    # Conversão de gênero (exemplo: 'male' = 0, 'female' = 1)
+    gender_map = {'male': 0, 'female': 1}
+    gender = gender.lower()
+    if gender not in gender_map:
+        return render_template_string("Erro: Gênero inválido. Use 'male' ou 'female'.")
+    
+    gender_encoded = gender_map[gender]
+
+    # Carrega o modelo treinado
+    try:
+        with open('./analises/xandy77/diabetes_predict_data.csv.pkl', 'rb') as file:
+            modelo = pickle.load(file)
+    except FileNotFoundError:
+        return render_template_string("Erro: Arquivo do modelo não encontrado.")
+    except Exception as e:
+        return render_template_string(f"Erro ao carregar modelo: {str(e)}")
+
+    # Faz a predição
+    try:
+        predict_diabete = modelo.predict([[age, gender_encoded, bmi]])
+    except Exception as e:
+        return render_template_string(f"Erro durante a predição: {str(e)}")
+
+    # Retorna o resultado
+    return render_template_string(
+        f"Dados recebidos:<br>Idade = {age}<br>Gênero = {gender}<br>BMI = {bmi}<br><br><strong>Resultado da predição: {predict_diabete[0]}</strong>"
+    )
 
 if __name__ == '__main__':
     app.run(debug=True)
