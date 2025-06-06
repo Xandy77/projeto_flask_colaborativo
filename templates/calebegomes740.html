@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Previsão de Diabetes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/calebestyle.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Previsão de Diabetes</h1>
+        <form action="/CalebeGomes740/Predição-de-Diabetes-Calebe" method="post">
+            <div class="form-group">
+                <label for="age">Idade:</label>
+                <input type="number" id="age" name="age" min="1" max="120" required>
+            </div>
+            <div class="form-group">
+                <label for="gender">Sexo:</label>
+                <select id="gender" name="gender" required>
+                    <option value="">Selecione</option>
+                    <option value="1">Masculino</option>
+                    <option value="0">Feminino</option>
+                </select>
+            </div>
+
+            <div class="input-inline-group">
+                <div class="form-group">
+                    <label for="weight">Peso (kg):</label>
+                    <input type="number" id="weight" step="0.1" min="1" max="300" placeholder="Ex: 70.5">
+                </div>
+                <div class="form-group">
+                    <label for="height">Altura (m):</label>
+                    <input type="number" id="height" step="0.01" min="0.5" max="2.5" placeholder="Ex: 1.75">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="bmi">IMC (Índice de Massa Corporal):</label>
+                <input type="number" id="bmi" name="bmi" step="0.01" min="10" max="60" required readonly>
+                </div>
+
+            <div class="form-group">
+                <label for="hypertension">Hipertensão:</label>
+                <select id="hypertension" name="hypertension" required>
+                    <option value="">Selecione</option>
+                    <option value="1">Sim</option>
+                    <option value="0">Não</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="heart_disease">Doença Cardíaca:</label>
+                <select id="heart_disease" name="heart_disease" required>
+                    <option value="">Selecione</option>
+                    <option value="1">Sim</option>
+                    <option value="0">Não</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="smoking_history">Histórico de Tabagismo:</label>
+                <select id="smoking_history" name="smoking_history" required>
+                    <option value="">Selecione</option>
+                    <option value="never">Nunca</option>
+                    <option value="no_info">Sem Informação</option>
+                    <option value="current">Atualmente</option>
+                    <option value="ever">Já Fumou</option>
+                    <option value="formerly">Antigamente</option>
+                    <option value="not_current">Não Atualmente</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="hba1c_level">Nível de HbA1c:</label>
+                <input type="number" id="hba1c_level" name="hba1c_level" step="0.01" min="3.0" max="15.0" required>
+            </div>
+            <div class="form-group">
+                <label for="blood_glucose_level">Nível de Glicose no Sangue:</label>
+                <input type="number" id="blood_glucose_level" name="blood_glucose_level" step="0.01" min="50" max="300" required>
+            </div>
+            <button ttype="submi">Prever Diabetes</button>
+        </form>
+
+        {% if prediction_text %}
+        <div class="result {{ 'positive' if 'positivo' in prediction_text else 'negative' }}">
+            {{ prediction_text }}
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        // Obtenha os elementos DOM
+        const weightInput = document.getElementById('weight');
+        const heightInput = document.getElementById('height');
+        const bmiInput = document.getElementById('bmi');
+
+        // Função para calcular e atualizar o IMC
+        function updateBmi() {
+            const weight = parseFloat(weightInput.value);
+            const height = parseFloat(heightInput.value);
+
+            if (weight > 0 && height > 0) {
+                const bmi = weight / (height * height);
+                bmiInput.value = bmi.toFixed(2); // Atualiza o campo IMC com 2 casas decimais
+            } else {
+                bmiInput.value = ''; // Limpa o campo se os valores forem inválidos
+            }
+        }
+
+        // Adiciona "ouvintes" de eventos para quando o peso ou altura mudarem
+        weightInput.addEventListener('input', updateBmi);
+        heightInput.addEventListener('input', updateBmi);
+
+        // Opcional: Chama a função uma vez ao carregar a página se já houver valores (ex: em caso de erro de formulário)
+        document.addEventListener('DOMContentLoaded', updateBmi);
+
+    </script>
+</body>
+</html>

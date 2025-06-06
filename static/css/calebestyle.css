@@ -1,0 +1,211 @@
+/* style.css */
+
+/* Base da página */
+body {
+    font-family: 'Inter', sans-serif; /* Fonte moderna e legível */
+    background: linear-gradient(135deg, #e0f2f7 0%, #cce7f5 100%); /* Gradiente de fundo suave */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px; /* Adiciona padding para telas pequenas */
+    box-sizing: border-box;
+    color: #333; /* Cor de texto padrão */
+}
+
+/* Contêiner principal do formulário */
+.container {
+    background-color: #ffffff;
+    padding: 40px; /* Mais padding para um visual espaçoso */
+    border-radius: 16px; /* Cantos mais arredondados */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); /* Sombra mais suave e proeminente */
+    width: 100%;
+    max-width: 600px; /* Aumenta a largura máxima para o formulário */
+    box-sizing: border-box;
+    border: 1px solid rgba(255, 255, 255, 0.6); /* Borda sutil para efeito glassmorphism */
+    backdrop-filter: blur(5px); /* Efeito de desfoque sutil */
+    animation: fadeInScale 0.8s ease-out forwards; /* Animação de entrada */
+    opacity: 0; /* Inicia invisível para a animação */
+}
+
+/* Título do formulário */
+h1 {
+    text-align: center;
+    color: #2c3e50; /* Azul escuro para o título */
+    font-size: 2.5rem; /* Tamanho maior para o título */
+    font-weight: 700; /* Mais negrito */
+    margin-bottom: 35px; /* Mais espaço abaixo do título */
+    letter-spacing: -0.8px; /* Ajuste para melhor leitura */
+}
+
+/* Grupo de formulário (label + input) */
+.form-group {
+    margin-bottom: 20px; /* Mais espaço entre os grupos de campos */
+}
+
+label {
+    display: block;
+    margin-bottom: 8px; /* Mais espaço abaixo do label */
+    color: #555;
+    font-weight: 600; /* Mais negrito */
+    font-size: 1.05em; /* Ligeiramente maior */
+}
+
+/* Estilo para inputs e selects */
+input[type="number"],
+select {
+    width: 100%; /* Ocupa 100% da largura do pai */
+    padding: 14px 16px; /* Mais padding para campos maiores */
+    border: 1px solid #c0d9ea; /* Borda mais suave */
+    border-radius: 8px; /* Cantos mais arredondados */
+    font-size: 1.1em; /* Tamanho da fonte maior */
+    box-sizing: border-box;
+    transition: all 0.3s ease; /* Transição para foco */
+    background-color: #f8fcff; /* Fundo levemente azulado */
+    appearance: none; /* Remove estilos padrão para select */
+}
+
+input[type="number"]:focus,
+select:focus {
+    border-color: #007bff; /* Borda azul no foco */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Sombra no foco */
+    outline: none; /* Remove o outline padrão */
+}
+
+/* Botão de submissão */
+button {
+    width: 100%;
+    padding: 16px; /* Mais padding para o botão */
+    background: linear-gradient(90deg, #007bff 0%, #0056b3 100%); /* Gradiente azul */
+    color: white;
+    border: none;
+    border-radius: 10px; /* Cantos mais arredondados */
+    font-size: 1.25rem; /* Tamanho da fonte maior */
+    font-weight: 700; /* Mais negrito */
+    cursor: pointer;
+    transition: all 0.3s ease; /* Transição para hover e ativação */
+    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3); /* Sombra para o botão */
+    transform: translateY(0);
+}
+
+button:hover {
+    background: linear-gradient(90deg, #0056b3 0%, #007bff 100%); /* Inverter gradiente no hover */
+    box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
+    transform: translateY(-2px); /* Efeito de "levitação" */
+}
+
+button:active {
+    transform: translateY(0); /* Volta ao normal ao clicar */
+    box-shadow: 0 2px 5px rgba(0, 123, 255, 0.2);
+}
+
+/* Estilos para o resultado da previsão */
+.result {
+    margin-top: 35px; /* Mais espaço acima do resultado */
+    padding: 20px; /* Mais padding */
+    border-radius: 10px; /* Mais arredondado */
+    text-align: center;
+    font-size: 1.3em; /* Tamanho da fonte maior */
+    font-weight: 700; /* Mais negrito */
+    line-height: 1.5; /* Espaçamento de linha para melhor leitura */
+    animation: fadeInResult 0.5s ease-out forwards; /* Animação de entrada para o resultado */
+    opacity: 0; /* Inicia invisível para a animação */
+}
+
+.result.positive {
+    background-color: #ffe6e6; /* Rosa claro vibrante para positivo */
+    color: #dc3545; /* Vermelho forte */
+    border: 2px solid #dc3545; /* Borda mais visível */
+    box-shadow: 0 4px 10px rgba(220, 53, 69, 0.2); /* Sombra suave */
+}
+
+.result.negative {
+    background-color: #e6ffe6; /* Verde claro vibrante para negativo */
+    color: #28a745; /* Verde forte */
+    border: 2px solid #28a745;
+    box-shadow: 0 4px 10px rgba(40, 167, 69, 0.2);
+}
+
+/* Estilos para agrupar campos de peso e altura na mesma linha */
+.input-inline-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; /* Mais espaço entre os campos */
+    flex-wrap: wrap; /* Permite que os itens quebrem a linha em telas pequenas */
+}
+.input-inline-group .form-group {
+    flex: 1; /* Faz com que os campos ocupem o mesmo espaço */
+    min-width: 150px; /* Garante que não fiquem muito pequenos */
+}
+
+/* Estilo para o campo de IMC quando é preenchido automaticamente (somente leitura) */
+#bmi[readonly] {
+    background-color: #e9ecef; /* Um cinza claro para indicar que é preenchido automaticamente */
+    cursor: default; /* Altera o cursor para o padrão, indicando que não é digitável */
+    border-style: dashed; /* Adiciona um estilo de borda para indicar que é diferente */
+    color: #666; /* Texto um pouco mais claro */
+}
+
+/* Animações */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeInResult {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsividade geral */
+@media (max-width: 768px) {
+    .container {
+        padding: 30px;
+        margin: 15px; /* Adiciona margem lateral para não ficar colado nas bordas */
+    }
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 25px;
+    }
+    input[type="number"],
+    select,
+    button {
+        padding: 12px 14px;
+        font-size: 1em;
+    }
+    .result {
+        font-size: 1.1em;
+        padding: 15px;
+    }
+    .input-inline-group {
+        flex-direction: column; /* Empilha os campos verticalmente em telas menores */
+        gap: 15px;
+    }
+}
+
+/* Responsividade para telas muito pequenas */
+@media (max-width: 480px) {
+    .container {
+        padding: 20px;
+    }
+    h1 {
+        font-size: 1.8rem;
+    }
+    .result {
+        font-size: 1em;
+        padding: 12px;
+    }
+}
